@@ -1,11 +1,10 @@
 <?php 
 
+$loggedIn = false;
 if(isset($_SESSION['loggedin'])){
   $loggedIn = true;
 }
-else{
-  $loggedIn = false;
-}
+
 
 echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="#">ISecure</a>
@@ -20,18 +19,25 @@ echo '<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       </li>';
 
 
-      echo '<li class="nav-item">
+      if(!$loggedIn){
+        echo '<li class="nav-item">
         <a class="nav-link" href="/signup.php">Sign up</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/login.php">Login</a>
       </li>';
-
-
-      echo '<li class="nav-item">
+      }
+      
+      if($loggedIn){
+        echo '<li class="nav-item">
         <a class="nav-link" href="/logout.php">Log out</a>
-      </li>
-    </ul>
+      </li>';
+      }
+
+      
+
+      
+    echo '</ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

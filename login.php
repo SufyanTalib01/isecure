@@ -7,17 +7,28 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         
-        $sql = "SELECT * FROM `isecuredata` WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT * FROM `isecuredata` WHERE username = '$username' ";
 
         $result = mysqli_query($connection , $sql);
         $num = mysqli_num_rows($result);
         
         if($num == 1){
-             $login = true;
-             session_start();
-             $_SESSION['loggedin'] = true;
-             $_SESSION['username'] = $username;
-             header("location: welcome.php");
+            while($row = mysqli_fetch_assoc($result)){
+                echo $row['password'];
+                if(password_verify($password , $row['password'])){
+                    $login = true;
+                    session_start();
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['username'] = $username;
+                    header("location: welcome.php");
+                }
+                else{
+                    $invalidPassword = true;
+                }
+                
+            }
+            
+             
         }
         else{
             $invalidPassword = true;

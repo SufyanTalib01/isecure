@@ -21,11 +21,14 @@
         if($existNumRow > 0){
             $ExistUsername = true;
         }
-        
+        // elseif(preg_match('/^[a-zA-Z]+$/' , $username)){
+        //     echo "Invalid username. Only alphabets are allowed.";
+        // }
         else{
             if(($password == $cpassword) ){
-
-            $sql = "INSERT INTO `isecuredata` (`username`, `password`, `dt`) VALUES ('$username', '$password', CURRENT_TIMESTAMP);";
+            
+            $hash = password_hash($password , PASSWORD_DEFAULT);
+            $sql = "INSERT INTO `isecuredata` (`username`, `password`, `dt`) VALUES ('$username', '$hash', CURRENT_TIMESTAMP);";
             
             $result = mysqli_query($connection , $sql);
 
